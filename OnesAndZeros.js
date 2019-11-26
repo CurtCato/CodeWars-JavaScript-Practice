@@ -246,8 +246,6 @@ function wordSearch(query, seq) {
 
 console.log(wordSearch("lo", ["Mercury", "lunch", "home"]));
 
-
-
 // You will be given two ASCII strings, a and b. Your task is write a function to determine which one of these strings
 //  is "worth" more, and return it.
 
@@ -256,30 +254,27 @@ console.log(wordSearch("lo", ["Mercury", "lunch", "home"]));
 
 // In the event of a tie, you should return the first string, i.e. a.
 
-function highest_value(str1, str2){
-  let str1Arr = []
-  let str2Arr = []
-  str1.split('').forEach(char => {
-    str1Arr.push(char.charCodeAt(char))
-  })
-  let str1Val = str1Arr.reduce((a, b) => a + b, 0)
+function highest_value(str1, str2) {
+  let str1Arr = [];
+  let str2Arr = [];
+  str1.split("").forEach(char => {
+    str1Arr.push(char.charCodeAt(char));
+  });
+  let str1Val = str1Arr.reduce((a, b) => a + b, 0);
 
-  str2.split('').forEach(char => {
-    str2Arr.push(char.charCodeAt(char))
-  })
-  let str2Val = str2Arr.reduce((a, b) => a + b, 0)
+  str2.split("").forEach(char => {
+    str2Arr.push(char.charCodeAt(char));
+  });
+  let str2Val = str2Arr.reduce((a, b) => a + b, 0);
 
-  if(str1Val > str2Val){
-    return str1Val
-  } else if(str1Val = str2Val) {
-    return str1
-  } else return str2Val
+  if (str1Val > str2Val) {
+    return str1Val;
+  } else if ((str1Val = str2Val)) {
+    return str1;
+  } else return str2Val;
 }
 
-
-console.log(highest_value("stuff", "WHAT"))
-
-
+console.log(highest_value("stuff", "WHAT"));
 
 //  An isogram is a word that has no repeating letters, consecutive or non-consecutive. Implement a function that
 //  determines whether a string that contains only letters is an isogram. Assume the empty string is an isogram.
@@ -289,12 +284,13 @@ console.log(highest_value("stuff", "WHAT"))
 // isIsogram("aba") == false
 // isIsogram("moOse") == false // -- ignore letter case
 
+let isIsogram = str =>
+  str
+    .toLowerCase()
+    .split("")
+    .every((c, i) => str.toLowerCase().indexOf(c) == i);
 
-let isIsogram = (str) => str.toLowerCase().split("").every((c, i) => str.toLowerCase().indexOf(c) == i);
-
-console.log(isIsogram("mOse"))
-
-
+console.log(isIsogram("mOse"));
 
 // 11/26/19
 
@@ -306,35 +302,33 @@ console.log(isIsogram("mOse"))
 // solution('abc') // should return ['ab', 'c_']
 // solution('abcdef') // should return ['ab', 'cd', 'ef']
 
-function strSplit(str){
-   let strArr = str.toString().split('')
-   let collector = []
-   let result = []
-   for( i = 0; i < strArr.length; i = i+2) {
-     let pairArr = []
-      pairArr.push(strArr[i], strArr[i+1])
-      collector.push(pairArr)
-   }
-   for(i = 0; i < collector.length; i ++){
-    result.push(collector[i].join(''))
-   }
-   if(result[result.length -1].length % 2 !== 0){
-    result[result.length - 1] += '_'
-   }
-   return result
+function strSplit(str) {
+  let strArr = str.toString().split("");
+  let collector = [];
+  let result = [];
+  for (i = 0; i < strArr.length; i = i + 2) {
+    let pairArr = [];
+    pairArr.push(strArr[i], strArr[i + 1]);
+    collector.push(pairArr);
+  }
+  for (i = 0; i < collector.length; i++) {
+    result.push(collector[i].join(""));
+  }
+  if (result[result.length - 1].length % 2 !== 0) {
+    result[result.length - 1] += "_";
+  }
+  return result;
 }
 
-console.log(strSplit("hungry"))
+console.log(strSplit("hungry"));
 
 // much better way to write the same function
 
-function strSplit2(str){
-  return (str %2 != 0 ? str += "_" : str).match(/../g)
+function strSplit2(str) {
+  return (str % 2 != 0 ? (str += "_") : str).match(/../g);
 }
 
-console.log(strSplit2("jollyworl"))
-
-
+console.log(strSplit2("jollyworl"));
 
 // 11/26/19
 
@@ -346,17 +340,14 @@ console.log(strSplit2("jollyworl"))
 // The returned format must be correct in order to complete this challenge.
 // Don't forget the space after the closing parentheses!
 
-function createPhoneNumber(numbers){
-    let areaCode = numbers.slice(0, 3).join('')
-    let firstThree =  numbers.slice(3,6).join ('')
-    let lastFour = numbers.slice(6, 11).join('')
-    return (`(${areaCode})` + " " + firstThree + "-" + lastFour)
+function createPhoneNumber(numbers) {
+  let areaCode = numbers.slice(0, 3).join("");
+  let firstThree = numbers.slice(3, 6).join("");
+  let lastFour = numbers.slice(6, 11).join("");
+  return `(${areaCode})` + " " + firstThree + "-" + lastFour;
 }
 
-console.log(createPhoneNumber([1,2,3,4,5,6,7,8,9,0]))
-
-
-
+console.log(createPhoneNumber([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]));
 
 // 11/26/19
 
@@ -378,53 +369,83 @@ console.log(createPhoneNumber([1,2,3,4,5,6,7,8,9,0]))
 // If n is <= 0 then return the input text.
 
 function encrypt(text, n) {
-  if(text===null || n===null || n<=0) {return text}
-
-  for(i=0; i<n; i++) {
-    output = ''
-    let odds = ''
-    let evens = ''
-    textArr = text.split('')
-
-    textArr.map(function(value, index){
-      if(index %2 == 0){
-        evens += value
-      }
-      else {
-        odds += value
-      }
-    })
-    output = odds += evens
-    text = output
+  if (text === null || n === null || n <= 0) {
+    return text;
   }
-  return output
-}
-console.log(encrypt("this is a test", 1))
 
+  for (i = 0; i < n; i++) {
+    output = "";
+    let odds = "";
+    let evens = "";
+    textArr = text.split("");
+
+    textArr.map(function(value, index) {
+      if (index % 2 == 0) {
+        evens += value;
+      } else {
+        odds += value;
+      }
+    });
+    output = odds += evens;
+    text = output;
+  }
+  return output;
+}
+console.log(encrypt("this is a test", 1));
 
 function decrypt(encryptedText, n) {
-  if(encryptedText===null || n<=0) {return encryptedText}
-
-  for(i=0; i<n; i++) {
-    output = ''
-
-    textArr = encryptedText.split('')
-    length = textArr.length
-    half_length = Math.floor(length/2)
-
-    evensArr = textArr.slice(half_length, length)
-
-    oddsArr = textArr.slice(0, half_length)
-
-    for(x=0; x<half_length; x++){
-      output += evensArr[x] + oddsArr[x]
-    }
-    if (length % 2 != 0){
-      output += evensArr[half_length]
-    }
-    encryptedText = output
+  if (encryptedText === null || n <= 0) {
+    return encryptedText;
   }
-  return output
+
+  for (i = 0; i < n; i++) {
+    output = "";
+
+    textArr = encryptedText.split("");
+    length = textArr.length;
+    half_length = Math.floor(length / 2);
+
+    evensArr = textArr.slice(half_length, length);
+
+    oddsArr = textArr.slice(0, half_length);
+
+    for (x = 0; x < half_length; x++) {
+      output += evensArr[x] + oddsArr[x];
+    }
+    if (length % 2 != 0) {
+      output += evensArr[half_length];
+    }
+    encryptedText = output;
+  }
+  return output;
 }
 
-console.log(decrypt("s et ashi tist", 2))
+console.log(decrypt("s et ashi tist", 2));
+
+// 11/26/19
+
+// You will get an array of numbers.
+
+// Every preceding number is smaller than the one following it.
+
+// Some numbers will be missing, for instance:
+
+// [-3,-2,1,5] //missing numbers are: -1,0,2,3,4
+// Your task is to return an array of those missing numbers:
+
+// [-1,0,2,3,4]
+
+function findMissingNumbers(arr) {
+  let missingNums = [];
+
+  for (i = Math.min(...arr); i < Math.max(...arr); i++) {
+    if(arr.indexOf(i) === -1) {
+      missingNums.push(i)
+    }
+  }
+  return missingNums
+}
+
+console.log(findMissingNumbers([-2,1,3,5,6,10]))
+
+
