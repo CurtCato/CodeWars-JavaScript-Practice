@@ -325,3 +325,106 @@ function strSplit(str){
 }
 
 console.log(strSplit("hungry"))
+
+// much better way to write the same function
+
+function strSplit2(str){
+  return (str %2 != 0 ? str += "_" : str).match(/../g)
+}
+
+console.log(strSplit2("jollyworl"))
+
+
+
+// 11/26/19
+
+// Write a function that accepts an array of 10 integers (between 0 and 9), that returns a string of those numbers in
+// the form of a phone number.
+
+// Example:
+// createPhoneNumber([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]) // => returns "(123) 456-7890"
+// The returned format must be correct in order to complete this challenge.
+// Don't forget the space after the closing parentheses!
+
+function createPhoneNumber(numbers){
+    let areaCode = numbers.slice(0, 3).join('')
+    let firstThree =  numbers.slice(3,6).join ('')
+    let lastFour = numbers.slice(6, 11).join('')
+    return (`(${areaCode})` + " " + firstThree + "-" + lastFour)
+}
+
+console.log(createPhoneNumber([1,2,3,4,5,6,7,8,9,0]))
+
+
+
+
+// 11/26/19
+
+// For building the encrypted string:
+// Take every 2nd char from the string, then the other chars, that are not every 2nd char, and concat them as new
+// String.
+// Do this n times!
+
+// Examples:
+
+// "This is a test!", 1 -> "hsi  etTi sats!"
+// "This is a test!", 2 -> "hsi  etTi sats!" -> "s eT ashi tist!"
+// Write two methods:
+
+// function encrypt(text, n)
+// function decrypt(encryptedText, n)
+// For both methods:
+// If the input-string is null or empty return exactly this value!
+// If n is <= 0 then return the input text.
+
+function encrypt(text, n) {
+  if(text===null || n===null || n<=0) {return text}
+
+  for(i=0; i<n; i++) {
+    output = ''
+    let odds = ''
+    let evens = ''
+    textArr = text.split('')
+
+    textArr.map(function(value, index){
+      if(index %2 == 0){
+        evens += value
+      }
+      else {
+        odds += value
+      }
+    })
+    output = odds += evens
+    text = output
+  }
+  return output
+}
+console.log(encrypt("this is a test", 1))
+
+
+function decrypt(encryptedText, n) {
+  if(encryptedText===null || n<=0) {return encryptedText}
+
+  for(i=0; i<n; i++) {
+    output = ''
+
+    textArr = encryptedText.split('')
+    length = textArr.length
+    half_length = Math.floor(length/2)
+
+    evensArr = textArr.slice(half_length, length)
+
+    oddsArr = textArr.slice(0, half_length)
+
+    for(x=0; x<half_length; x++){
+      output += evensArr[x] + oddsArr[x]
+    }
+    if (length % 2 != 0){
+      output += evensArr[half_length]
+    }
+    encryptedText = output
+  }
+  return output
+}
+
+console.log(decrypt("s et ashi tist", 2))
