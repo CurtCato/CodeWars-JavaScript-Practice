@@ -293,3 +293,35 @@ console.log(highest_value("stuff", "WHAT"))
 let isIsogram = (str) => str.toLowerCase().split("").every((c, i) => str.toLowerCase().indexOf(c) == i);
 
 console.log(isIsogram("mOse"))
+
+
+
+// 11/26/19
+
+// Complete the solution so that it splits the string into pairs of two characters. If the string contains an odd
+// number of characters then it should replace the missing second character of the final pair with an underscore ('_').
+
+// Examples:
+
+// solution('abc') // should return ['ab', 'c_']
+// solution('abcdef') // should return ['ab', 'cd', 'ef']
+
+function strSplit(str){
+   let strArr = str.toString().split('')
+   let collector = []
+   let result = []
+   for( i = 0; i < strArr.length; i = i+2) {
+     let pairArr = []
+      pairArr.push(strArr[i], strArr[i+1])
+      collector.push(pairArr)
+   }
+   for(i = 0; i < collector.length; i ++){
+    result.push(collector[i].join(''))
+   }
+   if(result[result.length -1].length % 2 !== 0){
+    result[result.length - 1] += '_'
+   }
+   return result
+}
+
+console.log(strSplit("hungry"))
